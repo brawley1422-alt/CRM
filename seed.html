@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Seed Rolodex</title>
+<style>body{font-family:system-ui;background:#0e0e14;color:#eee;padding:2rem;max-width:640px;margin:auto}a{color:#50c890}</style>
+</head>
+<body>
+<h1>Seeding Rolodex…</h1>
+<pre id="out"></pre>
+<p><a href="/CRM/">→ Open Rolodex</a></p>
+<script>
+const uuid = () => crypto.randomUUID();
+const now = () => new Date().toISOString();
+const daysAgo = (n) => new Date(Date.now() - n*86400000).toISOString();
+const daysAhead = (n) => new Date(Date.now() + n*86400000).toISOString().slice(0,10);
+
+const blankPersonal = { birthday:"", spouse:"", hasKids:false, kids:[], pets:"", hometown:"" };
+
+const mk = (o) => ({
+  id: uuid(),
+  name: "",
+  contact: "",
+  whereMet: "",
+  remember: "",
+  notes: "",
+  tags: [],
+  followUpDate: null,
+  personal: { ...blankPersonal },
+  addedAt: now(),
+  lastContactedAt: null,
+  interactions: [],
+  ...o,
+  personal: { ...blankPersonal, ...(o.personal||{}) },
+});
+
+const contacts = [
+  mk({
+    name: "Maya Chen",
+    contact: "maya.chen@gmail.com · 415-555-0142",
+    whereMet: "Design conf in Oakland, 2023",
+    remember: "Illustrator, loves obscure synthesizers",
+    notes: "Working on a children's book about octopuses. Mentioned she's looking for a studio space in the Mission.",
+    tags: ["friend", "creative", "sf"],
+    followUpDate: daysAhead(7),
+    personal: { birthday: "1991-03-14", spouse: "Devon", hasKids: true, kids: ["Juno (4)"], pets: "a cat named Miso", hometown: "Taipei" },
+    lastContactedAt: daysAgo(12),
+    interactions: [
+      { id: uuid(), text: "Coffee at Four Barrel. Talked about her book deadline.", createdAt: daysAgo(12) },
+      { id: uuid(), text: "Sent her the link to that Buchla documentary.", createdAt: daysAgo(40) },
+    ],
+  }),
+  mk({
+    name: "Jordan Ellis",
+    contact: "jordan@ellis.dev",
+    whereMet: "Coworker at Hexagon Labs (2021-2023)",
+    remember: "Backend wizard, terrible at ping pong",
+    notes: "Left to start a climate-tech thing. Might need Rust help later.",
+    tags: ["work", "engineer"],
+    followUpDate: null,
+    personal: { birthday: "1988-07-22", hometown: "Portland, OR", pets: "German shepherd named Huckleberry" },
+    lastContactedAt: daysAgo(3),
+    interactions: [
+      { id: uuid(), text: "Quick Slack — he's hiring for a founding eng.", createdAt: daysAgo(3) },
+    ],
+  }),
+  mk({
+    name: "Priya Raman",
+    contact: "priya.raman@outlook.com",
+    whereMet: "Climbing gym, belaying mishap",
+    remember: "V5 climber, PhD in neuroscience",
+    notes: "Runs a small newsletter about sleep research. Wants to collaborate on a podcast episode.",
+    tags: ["friend", "climbing", "science"],
+    followUpDate: daysAhead(2),
+    personal: { birthday: "1993-11-02", spouse: "", hasKids: false, kids: [], pets: "", hometown: "Bangalore" },
+    lastContactedAt: daysAgo(21),
+    interactions: [
+      { id: uuid(), text: "She sent over her latest newsletter draft. Solid.", createdAt: daysAgo(21) },
+      { id: uuid(), text: "Climbed at Dogpatch, she flashed the new green route.", createdAt: daysAgo(55) },
+    ],
+  }),
+  mk({
+    name: "Marcus Webb",
+    contact: "m.webb@webbco.com · LinkedIn: /in/marcuswebb",
+    whereMet: "Intro from Jordan Ellis",
+    remember: "Former CTO, consults on infra. Drinks oat milk lattes.",
+    notes: "Advising on our deploy pipeline. Invoice quarterly.",
+    tags: ["work", "advisor"],
+    followUpDate: daysAhead(14),
+    personal: { birthday: "1975-01-30", spouse: "Anna", hasKids: true, kids: ["Leo (12)", "Nora (9)"], hometown: "Boston" },
+    lastContactedAt: daysAgo(6),
+    interactions: [
+      { id: uuid(), text: "Reviewed Terraform PR with him — good feedback on the VPC layout.", createdAt: daysAgo(6) },
+    ],
+  }),
+  mk({
+    name: "Sam Okafor",
+    contact: "sam@okafor.studio",
+    whereMet: "Mutual friend's wedding in Lisbon",
+    remember: "Photographer, shoots film only",
+    notes: "Booked for Alex & Rin's wedding in June. Deposit paid.",
+    tags: ["friend", "creative", "vendor"],
+    followUpDate: daysAhead(30),
+    personal: { birthday: "1989-05-18", hometown: "Lagos" },
+    lastContactedAt: daysAgo(9),
+    interactions: [
+      { id: uuid(), text: "Confirmed shot list for the wedding.", createdAt: daysAgo(9) },
+    ],
+  }),
+  mk({
+    name: "Dr. Helen Vasquez",
+    contact: "office: 415-555-0199",
+    whereMet: "GP since 2019",
+    remember: "Dentist, very gentle",
+    notes: "Next cleaning booked automatically every 6 months.",
+    tags: ["health"],
+    followUpDate: null,
+    personal: {},
+    lastContactedAt: daysAgo(95),
+    interactions: [],
+  }),
+  mk({
+    name: "Tomás Ribeiro",
+    contact: "tomas.r@protonmail.com",
+    whereMet: "Language exchange meetup",
+    remember: "Teaches Portuguese, makes incredible bacalhau",
+    notes: "Want to invite him to the summer dinner thing.",
+    tags: ["friend", "language"],
+    followUpDate: daysAhead(5),
+    personal: { birthday: "1986-09-09", spouse: "Inês", hasKids: true, kids: ["Rafa (6)"], pets: "two turtles", hometown: "Porto" },
+    lastContactedAt: daysAgo(18),
+    interactions: [
+      { id: uuid(), text: "He brought pastéis de nata to meetup. Heroic.", createdAt: daysAgo(18) },
+    ],
+  }),
+  mk({
+    name: "Rachel Kim",
+    contact: "rachel.kim@venturepath.vc",
+    whereMet: "Pitch event at SFJAZZ",
+    remember: "Early-stage investor, ex-founder",
+    notes: "Passed on round but wants monthly updates. Keep warm.",
+    tags: ["work", "investor"],
+    followUpDate: daysAhead(10),
+    personal: {},
+    lastContactedAt: daysAgo(33),
+    interactions: [
+      { id: uuid(), text: "Sent Q1 update email. She replied with intro to Derek at Forum.", createdAt: daysAgo(33) },
+    ],
+  }),
+];
+
+localStorage.setItem("crm-contacts", JSON.stringify(contacts));
+document.getElementById("out").textContent =
+  "Wrote " + contacts.length + " contacts to localStorage['crm-contacts'].\n\n" +
+  contacts.map(c => "• " + c.name).join("\n");
+</script>
+</body>
+</html>
